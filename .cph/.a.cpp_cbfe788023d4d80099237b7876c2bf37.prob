@@ -1,1 +1,0 @@
-{"name":"Local: a","url":"/Users/adityapareek/Desktop/Code/a.cpp","tests":[{"id":1718523419606,"input":"2 4\n1 6 3 5\n1 4\n3 4\n1 2\n1 2","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/adityapareek/Desktop/Code/a.cpp","group":"local","local":true}
