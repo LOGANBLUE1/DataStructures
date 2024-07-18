@@ -2,12 +2,12 @@
 using namespace std;
 
 
-class UF {
+class DSU {
     vector<int> rep, compSize;
     int comp;
     
 public:
-    UF(int n) {
+    DSU(int n) {
         this->comp = n;
         for (int i = 0; i <= n; i++) {
             rep.push_back(i);
@@ -15,16 +15,16 @@ public:
         }
     }
     
-    int findrep(int x) {
+    int findParent(int x) {
         if (rep[x] == x) {
             return x;
         }
-        return rep[x] = findrep(rep[x]);
+        return rep[x] = findParent(rep[x]);
     }
     
     bool performUnion(int x, int y) {       
-        x = findrep(x); 
-        y = findrep(y);
+        x = findParent(x); 
+        y = findParent(y);
         
         if (x == y) {
             return 0;
@@ -113,6 +113,6 @@ public:
 int main()
 {
     int n;
-    UF uf(n);
+    DSU dsu(n);
     return 0;
 }

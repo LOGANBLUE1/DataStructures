@@ -1,5 +1,4 @@
-#include <iostream>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 
 
@@ -14,11 +13,13 @@ bool ignore_case(char a, char b){
 	// Converts both characters to lowercase and checks if a <= b
 	return (tolower(a) <= tolower(b));
 }
-
 bool check_if_sorted(string str){
 	return is_sorted(str.begin(), str.end(), ignore_case);
 }
 
+void eraseAllOccurances(string s, char ch){
+    s.erase(remove(s.begin(), s.end(), ch), s.end());
+}
 
 vector<int> stringToNumberVector(const string& numberString, char separator) {
     vector<int> numbers;

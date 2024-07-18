@@ -21,7 +21,17 @@ long long val(vector<bool>&a, int k){
     return ans;
 }
 
-int main(){
+int firstSetBitNumber(int n){
+    return n & -(n); // n & ~(n-1)
+}
 
+int firstSetBit(int n){//zero indexed 1 --> 0
+    int cnt = 0;
+    for(;!(n&(1<<(cnt)));cnt++){}
+    return cnt;
+}
+
+int main(){
+    cout<<firstSetBit(1);
     return 0;
 }

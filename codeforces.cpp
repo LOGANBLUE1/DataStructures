@@ -8,7 +8,7 @@
 #define cin(a) int a;cin>>a;
 #define precise(i) cout<<fixed<<setprecision(i)
 #define vi vector<int>
-#define input(a,n) for(int j=0;j<n;j++) cin>>a[j];
+#define input(a) for(int j=0;j<a.size();j++) cin>>a[j];
 #define debug(a) for(int j=0;j<a.size();j++) cout<<a[j]<<' ';cout<<endl;
 #define dbg(x) cout << #x << " = " << x << endl;
 #define vpii vector<pair<int,int>>
@@ -42,14 +42,19 @@ const long long MM=998244353;
 
 
 void solve() {
-    int n,k,h;
-    cin>>n>>k>>h;
+    int n,x;
+    cin>>n>>x;
     int ans = 0;
-    if(n > h){
-        ans += (n-h+1)*n;
+    for(int i=1;i<=n;i++){
+        ans += i <= n-x ? -(1<<i): (1<<i);
     }
-    
+    cout<<ans<<endl;
+    // vi a(n);
+    // input(a);
 }
+
+
+
 
 signed main() {
     ios_base::sync_with_stdio(false);
@@ -59,5 +64,4 @@ signed main() {
     while (t--) {
         solve();
     }
-
 }
