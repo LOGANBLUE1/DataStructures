@@ -1,6 +1,7 @@
 #include<iostream>
 using namespace std;
 
+__builtin_popcount(num);
 
 // k -> size of vector
 vector<bool> bits(int n,int k){

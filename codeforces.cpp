@@ -5,6 +5,8 @@
 #define rloop(i,a,b) std::for(int i=a;i>=b;i--)
 #define rep(i,n) rep(i,0,n)
 #define el cout<<endl;
+#define yes cout<<"YES"<<endl;
+#define no cout<<"NO"<<endl;
 #define cin(a) int a;cin>>a;
 #define precise(i) cout<<fixed<<setprecision(i)
 #define vi vector<int>
@@ -39,18 +41,18 @@ const long long M=1e9+7;
 const long long MM=998244353;
 
 
-
-
 void solve() {
-    int n,x;
-    cin>>n>>x;
-    int ans = 0;
-    for(int i=1;i<=n;i++){
-        ans += i <= n-x ? -(1<<i): (1<<i);
+    int n;
+    cin>>n;
+    vi a(n);
+    input(a);
+    int ans = accumulate(all(a),0);
+    if(n >= 2 && ans%2 == 0){
+        cout<<"YES"<<endl;
     }
-    cout<<ans<<endl;
-    // vi a(n);
-    // input(a);
+    else{
+        cout<<"NO"<<endl;
+    }
 }
 
 
