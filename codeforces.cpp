@@ -4,14 +4,14 @@
 #define loop(i,a,b) std::(int i=a;i<b;i++)
 #define rloop(i,a,b) std::for(int i=a;i>=b;i--)
 #define rep(i,n) rep(i,0,n)
-#define el cout<<endl;
-#define yes cout<<"YES"<<endl;
-#define no cout<<"NO"<<endl;
-#define cin(a) int a;cin>>a;
+#define enl cout<<endl
+#define yes cout<<"YES"<<endl
+#define no cout<<"NO"<<endl
+#define cin(a) int a;cin>>a
 #define precise(i) cout<<fixed<<setprecision(i)
 #define vi vector<int>
 #define input(a) for(int j=0;j<a.size();j++) cin>>a[j];
-#define debug(a) for(int j=0;j<a.size();j++) cout<<a[j]<<' ';cout<<endl;
+#define debug(a) for(int j=0;j<a.size();j++) cout<<a[j]<<' ';cout<<endl
 #define dbg(x) cout << #x << " = " << x << endl;
 #define vpii vector<pair<int,int>>
 #define sis string s;
@@ -30,7 +30,7 @@
 #define ctz(x) __builtin_ctz(x);//counts tailing zeros
 // template<typename T>
 // using u_set = std::unordered_set<T>;
-
+ 
 // template<typename Key, typename Value>
 // using u_map = std::unordered_map<Key, Value>;
 // #define mii map<int, int>
@@ -39,31 +39,55 @@ using namespace std;
 const long long INF=1e18;
 const long long M=1e9+7;
 const long long MM=998244353;
-
-
+ 
+ 
 void solve() {
-    int n;
-    cin>>n;
-    vi a(n);
-    input(a);
-    int ans = accumulate(all(a),0);
-    if(n >= 2 && ans%2 == 0){
-        cout<<"YES"<<endl;
+    int n,k;
+    cin>>n>>k;
+    vi a(n), b(n);
+    for(int i=0;i<n;i++)
+        cin>>a[i]>>b[i];
+    int val = accumulate(all(a),0LL) + accumulate(all(b),0LL);
+    if(val < k){
+        cout<<-1<<endl;
+        return;
     }
-    else{
-        cout<<"NO"<<endl;
+    vector<pair<int,int> >v;
+    for(int i=0;i<n;i++){
+        v.push_back(make_pair(min(a[i],b[i]),i));
     }
+    sort(v.begin(),v.end());
+    int ans = 0;
+    for(int i=0;i<v.size() && k;i++){
+        int ind = v[i].second;
+        int x = a[ind], y = b[ind];
+        if(x+y <= k){
+            ans += x*y;
+            k -= x+y;
+        }
+        else{
+            for(int i=0;i<k;i++){
+                ans += min(x,y);
+                if(x>=y)
+                    x--;
+                else    
+                    y--;
+            }
+            k=0;
+        }
+        cout<<ans<<' '<<k<<"  ";
+    }
+    cout<<ans<<endl;
 }
-
-
-
-
+ 
+ 
+ 
 signed main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     int t;
-    cin >> t;
-    while (t--) {
+    cin>>t;
+    while(t--){
         solve();
     }
 }

@@ -20,4 +20,4 @@ public:
 
         return res;
     }
-};// choose i,j increase or decrease all the elements in subarray by 1
+};// choose i,j increase or decrease all the elements in subarray by 1 to make it equal to target

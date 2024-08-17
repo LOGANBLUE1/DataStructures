@@ -1,1 +1,1 @@
-{"name":"Local: a","url":"/Users/adityapareek/Desktop/Code/a.cpp","tests":[{"id":1720264814553,"input":"","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/adityapareek/Desktop/Code/a.cpp","group":"local","local":true}
+{"name":"Local: a","url":"/Users/adityapareek/Desktop/Code/a.cpp","tests":[{"id":1720264814553,"input":"11000","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/adityapareek/Desktop/Code/a.cpp","group":"local","local":true}
