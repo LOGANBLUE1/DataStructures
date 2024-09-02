@@ -1,18 +1,15 @@
-function log(message) {
-  const stack = new Error().stack.split('\n')[2].trim();
-  console.log(`\x1b[34m${stack}\x1b[0m: ${message}`);
-}
-const apiConnector = (method, url, bodyData, headers, params) => {
+export const apiConnector = (method, url, bodyData, headers, params) => {
     // Construct options object for fetch
     const options = {
       method: method.toUpperCase(),
       headers: headers || {},
       body: bodyData ? JSON.stringify(bodyData) : undefined,
     };
-    log("Api connector : ", method, url, bodyData, headers, params)
+  
     // Append query parameters to URL if present
     const queryString = params ? `?${new URLSearchParams(params)}` : '';
     const requestUrl = `${url}${queryString}`;
+  
     // Make fetch request
     return fetch(requestUrl, options)
       .then(response => {
@@ -27,10 +24,4 @@ const apiConnector = (method, url, bodyData, headers, params) => {
         // Handle network errors or failed requests
         throw new Error(`Network Error: ${error.message}`);
       });
-  };
-  
-  apiConnector('GET', 'google.com', null, { 'Authorization': 'Bearer token' }, { 'page': 1, 'limit': 10 })
-    .then(data => console.log(data))
-    .catch(error => console.error(error));
-  
-  
+};

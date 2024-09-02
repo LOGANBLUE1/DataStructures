@@ -3,22 +3,27 @@ using namespace std;
 
 class Trie {
 public:
+    char data;
     Trie* children[26];
     bool isEnd;
+    int childCount;
 
-    Trie() {
+    Trie(char d) {
+        this->data = d;
         for (int i = 0; i < 26; i++) {
             children[i] = nullptr;
         }
+        childCount = 0;
         isEnd = false;
     }
+    
 };
 
 class Solution {
 public:
     Trie* root;
     Solution() {
-        root = new Trie();
+        root = new Trie('-');
     }
 
     void insert(string word) {
@@ -26,14 +31,17 @@ public:
         for (char c : word) {
             int i = c - 'a';
             if (node->children[i] == nullptr) {
-                node->children[i] = new Trie();
+                node->children[i] = new Trie(c);
+            }
+            else{
+                node->childCount++;
             }
             node = node->children[i];
         }
         node->isEnd = true;
     }
 
-    string search(string word) {
+    string searchWord(string word) {
         Trie* node = root;
         string result;
         for (char c : word) {
@@ -50,19 +58,24 @@ public:
         return word;
     }
 
-    string replaceWords(vector<string>& dictionary, string sentence) {
-        for (string word : dictionary) {
-            insert(word);
+    void findLCP(string first, string &ans, Trie* root) {
+        //yha main galti karunga
+        if(root->isEnd) {
+            return;
         }
+        for(int i=0; i<first.length(); i++) {
+            char ch = first[i];
 
-        stringstream ss(sentence);
-        string word, result;
-        while (ss >> word) {
-            if (!result.empty()) {
-                result += " ";
+            if(root->childCount == 1) {
+                ans.push_back(ch);
+                int index = ch - 'a';
+                root = root->children[index];
             }
-            result += search(word);
+            else
+                break;
+            
+            if(root->isEnd)
+                break;
         }
-        return result;
     }
 };
