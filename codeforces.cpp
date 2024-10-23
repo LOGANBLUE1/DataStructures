@@ -58,42 +58,8 @@ long long gcd(long long a, long long b) {
 }
 
 void solve() {
-    int n,q;
-    cin>>n>>q;
-    int arr[n];
-    for(int i=0;i<n;i++)
-        cin>>arr[i];
     
-    for(int i=0;i<q;i++){
-        int l,r;
-        cin>>l>>r;
-        int sz = r-l+1;
-        if(sz&1){
-            naa;
-        }
-        else{
-            unordered_map<int,vector<int>>mp;
-            for(int i=l;i<=r;i++){
-                mp[arr[i]].push_back(i);
-            }
-            for(auto [_,v]: mp){
-                int even = 0, odd = 0;
-                for(int i=0;i<v.size();i++){
-                    if(v[i]&1)
-                        odd++;
-                    else even++;
-                }
-                if(odd >= 2|| even >= 2){
-                    naa;
-                    break;
-                }
-            }
-            haa;
-        }
-    }
 }
-
- 
  
 signed main() {
     ios_base::sync_with_stdio(false);
