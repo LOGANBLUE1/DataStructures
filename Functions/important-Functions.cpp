@@ -1,19 +1,53 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int sumOfDigits(int num)
-int nCr(int n, int r);
+int lengthOfLIS(vector<int>& a);
+vector<int> findFactors(int n);
+long long binpow(long long a, long long b, long long mod);
+int sumOfDigits(int num);
+long long nCr(int n, int r);
 bool isPalindrome(int x);
 int max(int a,int b,int c);
 double power(double x, int n);
-int power(int N, int M);
-vector<int> findMissingRepeatingNumbers(vector<int> a);
+long long power(int N, int M);
+int bs(vector<int>arr,int s,int e,int target);
+
 int expSearch(vector<int>arr,int n,int x);
 bool checkPalindrome(string a);
 
 
 
+int lengthOfLIS(vector<int>& a) {
+    vector<int>b(1, a[0]);
+    for(auto it=a.begin()+1;it<a.end();it++)
+        if(*it > b.back())  b.push_back(*it);
+        else    b[lower_bound(b.begin(),b.end(),*it) - b.begin()] = *it;
+    return b.size();
+}
 
+vector<int> findFactors(int n) {
+    vector<int> factors;
+    for (int i = 1; i*i <= n; ++i) {
+        if (n % i == 0) {
+            factors.push_back(i);
+            if(i*i != n)
+                factors.push_back(n/i);
+        }
+    }
+    return factors;
+}
+
+long long binpow(long long a, long long b, long long m) {//a**b%m
+    a %= m;
+    long long res = 1;
+    while (b > 0) {
+        if (b & 1)
+            res = res * a % m;
+        a = a * a % m;
+        b >>= 1;
+    }
+    return res;
+}
 
 int sumOfDigits(int num){
     int sum = 0;
@@ -33,14 +67,14 @@ int sumOfDigits(int num){
 }
 
 
-int nCr(int n, int r) {
+long long nCr(int n, int r) {
     long long res = 1;
 
     for (int i = 0; i < r; i++) {
         res = res * (n - i);
         res = res / (i + 1);
     }
-    return (int)(res);
+    return res;
 }
 
 
@@ -114,4 +148,38 @@ bool checkPalindrome(string a) {
         }
     }
     return 1;
+}
+
+int bs(vector<int>arr,int s,int e,int target){
+    while(s<=e){
+        int mid = (s+e) >>1;
+        if( target == arr[mid]){
+            return mid;
+        }
+        else if( target > arr[mid] ){
+            s = mid+1;
+        }
+        else{
+            e = mid-1;
+        }
+    }
+    return -1;
+}
+
+int expSearch(vector<int>arr,int n,int x){
+    if( n == 1)  return 1;
+
+    int i = 1;
+    while( i < n && arr[i] <= x ){
+       i *= 2;
+    }
+  return bs(arr,i/2,min(n-1,i),x);
+}
+
+//redix sort
+void a(){
+    int n;
+    vector<int> idx(n);
+    iota(idx.begin(), idx.end(), 0);
+    // ranges::stable_sort(idx, [&](auto a, auto b) { return nums[a] < nums[b]; });
 }

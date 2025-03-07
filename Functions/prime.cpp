@@ -29,20 +29,16 @@ bool isPrime(int n) {
 }
 
 
-vector<bool> seive(int n){
-    vector<bool>v(n+1,true);
-    v[0] = false, v[1] = false;
-
-    for(int i=2;i*i<=n;i++){
-        if(v[i] == true){
-            int j = i*i;
-            while(j <= n){
-                v[j] = false;
-                j += i;
+vector<bool> seive(){
+    is_prime[0] = is_prime[1] = false;
+    for(int p = 2; p < MAX; ++p){
+        if(is_prime[p]){
+            for(int j = 2; j * p < MAX; ++j){
+                is_prime[j * p] = false;
             }
         }
     }
-    return v;
+    return is_prime;
 }
 
 vector<int> primeNumbers(int n){

@@ -1,24 +1,29 @@
 #include<iostream>
 using namespace std;
 
-is_sorted(s.begin(),s.end());
-char c = tolower(a);
-c = toUpper(a)
+void character(){
+    char c;
+    isalpha(c);
+    isdigit(c);
+    isalnum(c);
+    isupper(c);
+    islower(c);
 
-string str = "Hello World";
-str.empty();
-str.find("World");
-str.substr(6, 5); // sub will be "World"
-str.replace(6, 5, "Universe"); // str will be "Hello Universe"
-str.erase(5, 6); // str will be "Hello"
+    tolower(c);
+    toupper(c);
+}
+
+void String(){
+    string s;
+    s.empty();
+    s.size();
+    s.find("World");
+    s.substr(6, 5); // pos, len
+    s.replace(6, 5, "Universe"); // str will be "Hello Universe"
+    s.erase(5, 6); // str will be "Hello"
+}
 
 
-bool b = isalpha(c);
-b = isdigit(c);
-b = isalnum(c);// alpha numeric
-b = isupper(c);
-b = islpper(c)
-bool isVowel(char c);
 
 
 bool isVowel(char c) {
@@ -40,6 +45,5 @@ vector<int> parseAndFillVector(const string& numberString, char separator) {
 }
 
 int main(){
-    
     return 0;
 }
