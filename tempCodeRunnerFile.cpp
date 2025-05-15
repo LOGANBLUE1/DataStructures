@@ -1,2 +1,1 @@
-ase::sync_with_stdio(false);
-    // cin.tie(N
+b.ss&1
