@@ -2,6 +2,10 @@
 using namespace std;
 const long long M = 1e9+7;
 
+int reverseMeaningfulBits(int n); // 000110 -> 110 -> 011
+int reverseAllBits(int x); // 000110 -> 011000... (32 bits)
+
+
 int a(int num){
     return __builtin_popcount(num);
 }
@@ -16,16 +20,6 @@ vector<bool> bits(int n,int k){
     return ans;
 }
 
-long long computeModInverse(long long base) {
-    long long result = 1, exp = M - 2;
-    while (exp) {
-        if (exp % 2) result = (result * base) % M;
-        base = (base * base) % M;
-        exp /= 2;
-    }
-    return result;
-}
-
 long long val(vector<bool>&a, int k){
     long long ans = 0;
     for(int i=0;i<k;i++){
@@ -35,8 +29,29 @@ long long val(vector<bool>&a, int k){
     return ans;
 }
 
+int reverseMeaningfulBits(int n) { // 000110 -> 11
+    int rev = 0;
+    while (n > 0) {
+        rev = (rev << 1) | (n & 1);
+        n >>= 1;
+    }
+    return rev;
+}
+
+int reverseAllBits(int x) {
+    int r = 0;
+    for (int i = 0; i < 32; i++) {
+        r = (r << 1) | (x & 1);
+        x >>= 1;
+    }
+    return r;
+}
+
 int firstSetBitNumber(int n){
     return n & -(n); // n & ~(n-1)
+    // ~(5) is same as -6
+    // ~(0) is same as -1
+    // 00000.... -> 11111....
 }
 
 int firstSetBit(int n){//zero indexed 1 --> 0
@@ -45,27 +60,34 @@ int firstSetBit(int n){//zero indexed 1 --> 0
     return i;
 }
 
-vector<int> getNCR(int n){
-    vector<int> fact(n+1);
-    fact[1] = 1;
-    for (int i = 2; i <= n; i++){
-        fact[i] = (1ll * i * fact[i-1])%M;
+/// @brief ////////////////// BITSET ////////////////////////////////
+void getBitsetPrint(int n){
+    // auto a = bitset<32>(n);
+    // OR
+    bitset<32> a(n);
+
+    // to flip all the bits
+    // a.flip();
+
+    //to print 6 -> 01100000....
+    for(auto i=0;i<32;i++){
+        cout<<a[i]<<" ";
     }
 
-    vector<int> ans(n+1);
-    ans[0] = ans[n] = 1;
-    for (int i = 1; i < n; i++){
-        int val = (1LL * fact[i] * fact[n-i])%M;
-        int temp = (1LL * fact[n] * computeModInverse(val))%M;
-        ans[i] = temp;
-    }
-    
-    return ans;
+    // convert back to integer
+    int x = (int)(a.to_ulong());
+}
+
+bitset<32> getBitset(int n){
+    bitset<32> a(n);
+    return a;
+}
+
+int getIntFromBitset(bitset<32>&a){
+    return (int)(a.to_ulong());
 }
 
 int main(){
-    int n;
-    cin>>n;
-    
+    getBitsetPrint(-1);
     return 0;
 }

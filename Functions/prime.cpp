@@ -36,9 +36,9 @@ bool isPrime(int n) {
 vector<bool> seive(int n){
     vector<bool> is_prime(n+1, true);
     is_prime[0] = is_prime[1] = false;
-    for(int p = 2; p < n; ++p){
+    for(int p = 2; p <= n; ++p){
         if(is_prime[p]){
-            for(int j = 2; j * p < n; ++j){
+            for(int j = 2; j * p <= n; ++j){
                 is_prime[j * p] = false;
             }
         }
@@ -73,5 +73,6 @@ int main(){
             cout<<i<<", ";
         }
     }cout<<endl;
+    cout<<prime100000
     return 0;
 }

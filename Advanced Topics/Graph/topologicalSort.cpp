@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void dfs(vector<vector<int>>& graph, int node, vector<bool>& visited, stack<int>& result) {
+void dfs(vector<vector<int>>& graph, int node, vector<bool>& visited, vector<int>& result) {
     visited[node] = true;
 
     for (int neighbor : graph[node]) {
@@ -13,12 +13,12 @@ void dfs(vector<vector<int>>& graph, int node, vector<bool>& visited, stack<int>
         }
     }
 
-    result.push(node);
+    result.push_back(node);
 }
 
 vector<int> topologicalSort(vector<vector<int>>& graph, int n) {
     vector<bool> visited(n, false);
-    stack<int> result;
+    vector<int> result;
 
     for (int i = 0; i < n; i++) {
         if (!visited[i]) {
@@ -26,13 +26,8 @@ vector<int> topologicalSort(vector<vector<int>>& graph, int n) {
         }
     }
 
-    vector<int> sortedNodes;
-    while (!result.empty()) {
-        sortedNodes.push_back(result.top());
-        result.pop();
-    }
-
-    return sortedNodes;
+    reverse(result.begin(), result.end());
+    return result;
 }
 
 int main() {

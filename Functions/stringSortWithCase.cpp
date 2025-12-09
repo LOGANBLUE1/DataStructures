@@ -7,7 +7,7 @@ vector<int> stringToNumberVector(const string& numberString, char separator);
 
 vector<string> stringToWordsVector(const string &sentence, char separator);
 vector<string> stringToWordsVector(string &sentence);//seperotor is ' ' eg. This is a school. 
-
+bool isSmallerString(string a, string b);
 
 bool ignore_case(char a, char b){
 	// Converts both characters to lowercase and checks if a <= b
@@ -57,6 +57,14 @@ vector<string> stringToWordsVector(string &sentence) {
 
     return v;
 }
+
+bool isSmallerString(string a, string b){
+    for (size_t i = 0; i < min(a.size(), b.size()); ++i) {
+        if (a[i] < b[i]) return true;
+        else if (a[i] > b[i]) return false;
+    }
+    return a.size() < b.size();
+ }
 
 int main(){
 	

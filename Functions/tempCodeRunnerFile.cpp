@@ -1,4 +1,6 @@
-bool ignore_case(char a, char b){
-// 	// Converts both characters to lowercase and checks if a <= b
-// 	return (tolower(a) <= tolower(b));
-// }
+ 1e5; 
+    // auto v = seive(n);
+    // for(int i=0;i<n;i++){
+    //     if(v[i]){
+    //         cout<<i<<", ";
+    //     }

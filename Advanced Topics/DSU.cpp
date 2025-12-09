@@ -3,23 +3,20 @@ using namespace std;
 
 
 class DSU {
-    vector<int> rep, compSize;
+    vector<int> parent, compSize;
     int comp;
     
 public:
     DSU(int n) {
         this->comp = n;
         for (int i = 0; i <= n; i++) {
-            rep.push_back(i);
+            parent.push_back(i);
             compSize.push_back(1);
         }
     }
     
     int findParent(int x) {
-        if (rep[x] == x) {
-            return x;
-        }
-        return rep[x] = findParent(rep[x]);
+        return parent[i] != i ? find(parent[i]) : parent[i];
     }
     
     bool performUnion(int x, int y) {       
@@ -32,10 +29,10 @@ public:
         
         if (compSize[x] > compSize[y]) {
             compSize[x] += compSize[y];
-            rep[y] = x;
+            parent[y] = x;
         } else {
             compSize[y] += compSize[x];
-            rep[x] = y;
+            parent[x] = y;
         }
         
         comp--;

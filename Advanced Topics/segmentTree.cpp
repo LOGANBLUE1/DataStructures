@@ -51,7 +51,6 @@ public:
     }
 };
 
-
 // max tree
 class SEG2 {
     vector<int> seg;

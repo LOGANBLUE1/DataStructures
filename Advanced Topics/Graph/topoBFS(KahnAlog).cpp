@@ -4,42 +4,26 @@
 
 using namespace std;
 
-vector<int> topoSortBFS(vector<vector<int>>& graph) {
-    int n = graph.size();
-    vector<int> inDegree(n, 0);
-    for(auto adj: graph){
-        for(auto nbr: adj){
-            inDegree[nbr]++;
-        }
+vector<int> topologicalSort(vector<vector<pair<int,int>>> &adj) {
+    int n = adj.size();
+    vector<int> indeg(n, 0);
+    for (int i = 0; i < n; ++i) {
+        for (auto &[nbr, _] : adj[i])
+            ++indeg[nbr];
     }
 
-    vector<int> result;
+    vector<int> ts;
     queue<int> q;
-    for (int i = 0; i < n; i++) {
-        if (inDegree[i] == 0) {
-            q.push(i);
-        }
-    }
-
+    for (int i = 0; i < n; ++i)
+        if (indeg[i]==0) q.push(i);
+        
     while (!q.empty()) {
-        int curr = q.front();
-        q.pop();
-        result.push_back(curr);
-
-        // Reduce in-degree of adjacent nodes
-        for (int neighbor : graph[curr]) {
-            inDegree[neighbor]--;
-            if (inDegree[neighbor] == 0) {
-                q.push(neighbor);
-            }
-        }
+        int u = q.front(); q.pop();
+        ts.push_back(u);
+        for (auto [v,_] : adj[u])
+            if (--indeg[v] == 0) q.push(v);
     }
-
-    if (result.size() != n) {
-        result.clear(); // Clear the result vector
-    }
-
-    return result;
+    return ts;
 }
 
 int main() {
@@ -47,7 +31,7 @@ int main() {
 
     vector<vector<int>> graph(n);
     
-    vector<int> sortedOrder = topoSortBFS(graph);
+    vector<int> sortedOrder = topologicalSort(graph);
 
     if (sortedOrder.empty()) {
         cout << "The graph contains a cycle.\n";
