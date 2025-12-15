@@ -51,7 +51,6 @@ void prettyPrintTree(TreeNode* node, string prefix = "", bool isLeft = true) {
     }
 }
 
-
 signed main(){
     vector<int> v = {1, 2, 3, 4, 5};
     vector<int> v2 = {1, 2, 0, 4, 5};

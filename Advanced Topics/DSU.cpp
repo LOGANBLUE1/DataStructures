@@ -107,8 +107,7 @@ public:
 };
 
 
-int main()
-{
+int main(){
     int n;
     DSU dsu(n);
     return 0;

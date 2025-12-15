@@ -1,6 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
-// Segment tree (sum)
+
+// sum tree
 class SEG{
     vector<int>seg;
 public:
@@ -43,9 +44,9 @@ public:
         }
 
         int mid = (start + end)>>1;
-        int left_sum = query(2 * ind + 1, start, mid, L, R, a);
-        int right_sum = query(2 * ind + 2, mid + 1, end, L, R, a);
-        return left_sum + right_sum;
+        int left_MAX = query(2 * ind + 1, start, mid, L, R, a);
+        int right_MAX = query(2 * ind + 2, mid + 1, end, L, R, a);
+        return left_MAX + right_MAX;
     }
 };
 
@@ -93,7 +94,7 @@ public:
 };
 
 // max tree better version
-class SEG3 {
+class MAX {
     int n;
     vector<int> seg;
     void build(int ind, int start, int end, vector<int>&a) {
@@ -132,7 +133,7 @@ class SEG3 {
         return max(left_max, right_max);
     }
 public:
-    SEG3(int n): n(n), seg(4*n + 1) {}
+    MAX(int n): n(n), seg(4*n + 1) {}
 
     void build(vector<int>&a){
         this->build(0, 0, n-1, a);
@@ -146,7 +147,7 @@ public:
 };
 
 // sum tree better version
-class SEG4{
+class SUM{
     int n;
     vector<int>seg;
 
@@ -187,12 +188,12 @@ class SEG4{
         }
 
         int mid = (start + end)>>1;
-        int left_sum = query(2 * ind + 1, start, mid, L, R);
-        int right_sum = query(2 * ind + 2, mid + 1, end, L, R);
-        return left_sum + right_sum;
+        int left_MAX = query(2 * ind + 1, start, mid, L, R);
+        int right_MAX = query(2 * ind + 2, mid + 1, end, L, R);
+        return left_MAX + right_MAX;
     }
 public:
-    SEG4(int n): n(n), seg(4*n + 1) {}
+    SUM(int n): n(n), seg(4*n + 1) {}
 
     void build(vector<int>&a){
         this->build(0, 0, n-1, a);
