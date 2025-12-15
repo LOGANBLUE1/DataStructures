@@ -3,6 +3,11 @@
 #include <random>
 using namespace std;
 #define int long long
+#define ll long long
+#define pb push_back
+#define ppb pop_back
+#define pf push_front
+#define ppf pop_front
 #define vi vector<int>
 #define pii pair<int,int>
 #define all(x) begin(x), end(x)
@@ -12,7 +17,68 @@ std::mt19937_64 RNG(chrono::steady_clock::now().time_since_epoch().count());
 
 const long long INF = 1e18;
 const long long M = 1e9+7;
-int MOD = 998244353;
+const long long MOD = 998244353;
+
+void print(int a){
+    cout<<a<<" ";
+}
+void print(vector<int>&a){
+    for (auto i:a) cout<<i<<" ";
+    cout<<endl;
+}
+void print(vector<vector<int>>&a){
+    for (auto i:a){
+        for (auto j:i) cout<<j<<" ";
+        cout<<endl;
+    }
+}
+void print(set<int>&s){
+    for (auto i:s) cout<<i<<" ";
+    cout<<endl;
+}
+void print(map<int,int>&m){
+    for (auto i:m) cout<<i.ff<<":"<<i.ss<<" ";
+    cout<<endl;
+}
+void print(pair<int,int>&p){
+    cout<<"{"<<p.ff<<","<<p.ss<<"}"<<endl;
+}
+void print(vector<pii>&a){
+    for (auto i:a) cout<<"{"<<i.ff<<","<<i.ss<<"} ";
+    cout<<endl;
+}
+void print(vector<vector<pii>>&a){
+    for (auto i:a){
+        for (auto j:i) cout<<"{"<<j.ff<<","<<j.ss<<"} ";
+        cout<<endl;
+    }
+}
+void print(queue<int>q){
+    while(!q.empty()){
+        cout<<q.front()<<" ";
+        q.pop();
+    }
+    cout<<endl;
+}
+void print(stack<int>s){
+    while(!s.empty()){
+        cout<<s.top()<<" ";
+        s.pop();
+    }
+    cout<<endl;
+}
+void print(deque<int>d){
+    for (auto i:d) cout<<i<<" ";
+    cout<<endl;
+}
+void print(priority_queue<int>pq){
+    while(!pq.empty()){
+        cout<<pq.top()<<" ";
+        pq.pop();
+    }
+    cout<<endl;
+}
+
 long long computeModInverse(long long base) {
     long long result = 1, exp = M - 2;
     while (exp) {
@@ -21,6 +87,22 @@ long long computeModInverse(long long base) {
         exp /= 2;
     }
     return result;
+}
+
+vector<int> getPref(vector<int>&a){
+    vector<int> pref(a.size()+1);
+    for (int i = 1; i <= a.size(); i++){
+        pref[i] = (pref[i-1] + a[i-1]);
+    }
+    return pref;// 0 a[0] a[0]+a[1]
+}
+
+vector<int> getSuff(vector<int>&a){
+    vector<int> suff(a.size()+1);
+    for (int i = a.size()-1; i >= 0; i--){
+        suff[i] = (suff[i+1] + a[i-1]);
+    }
+    return suff;
 }
 
 bool isPrime(int n) {
@@ -37,7 +119,7 @@ bool isPrime(int n) {
     return true;
 }
 
-long long mod_pow(long long base, long long exp, long long mod) {
+long long modPow(long long base, long long exp, long long mod) {
     long long result = 1;
     while (exp > 0) {
         if (exp % 2 == 1) {
@@ -57,105 +139,88 @@ void bruteForce(int n, vector<int>&a){
     }
 }
 
-tuple<int,int,int> getMaxSum(const vector<int>&arr){
-    int n = arr.size();
-    int maxSum = arr[0], currSum = 0;
-    int l = 0, r = 0, l2 = 0, r2 = 0;
-    for(int i=0;i<n;i++){
-        currSum += arr[i];
-        if(currSum > maxSum){
-            maxSum = currSum;
-            l = l2, r = i;
-        }
-        if(currSum < 0){
-            currSum = 0;
-            l2 = i+1, r2 = i+1;
-        }
+bool isCorrect(string tobe, string given){
+    for(int i=0;i<tobe.size();i++){
+        if(tobe[i]=='1' && given[i]=='0') return false;
     }
-    return {l, r, maxSum};
+    return true;
 }
 
-int findSum(vector<int>&a, vector<int>&b, int x, int y){
-    cout<<x<<" - "<<y<<endl;
-    int len = y-x+1;
-    vector<int>pref(len);
-    pref[0] = a[x];
-    for(int i=1;i<len;i++){
-        pref[i] = pref[i-1] + a[x+i];
-    }
-    int curr = b[y]+pref[y-x], maxAns = curr;
-    for(int i=y-1;i>=x;i--){
-        curr += b[i]-a[i];
-        maxAns = max(maxAns, curr+pref[i-x]);
-    }
-    return maxAns;
-}
+// unordered_map<int, unordered_map<int, int>> dp;
+// int n;
+// int solveRec(int prodLeft, int minFactor, int sumLeft) {
+//     if (sumLeft < 0) return 0;
+//     if (prodLeft < minFactor) return 0;
 
-// void solve2() {
-//     int n;
-//     cin>>n;
-//     vector<int>a(n), b(n);
-//     for(int i=0;i<n;i++){
-//         cin>>a[i];
+//     if (dp[prodLeft].count(minFactor))
+//         return dp[prodLeft][minFactor];
+
+//     int ways = 0;
+//     if (prodLeft <= sumLeft) ways++;
+
+//     int lim = sqrtl(prodLeft);
+//     for (int f = minFactor; f <= lim; ++f) {
+//         if (prodLeft % f == 0) {
+//             if (f > sumLeft) break;
+//             ways += solveRec(prodLeft / f, f, sumLeft - f);
+//         }
 //     }
-//     for(int i=0;i<n;i++){
-//         cin>>b[i];
-//     }
-//     auto [l,r,s] = getMaxSum(a);
-//     auto [l2, r2, s2] = getMaxSum(b);
-//     if((r>=l2 && r<=r2)||(l>=l2 && l<=r2)){
-//         cout<<s+s2<<endl;
-//     }
-//     else{
-//         int ans;
-//         if(l < l2)  ans = findSum(a, b, r, l2);
-//         else    ans = findSum(b, a, r2, l);
-//         cout<<ans<<endl;
-//     }
+
+//     return dp[prodLeft][minFactor] = ways;
 // }
 
 void solve(){
-    int n, k;
-    cin>>n>>k;
-    string s;
-    cin>>s;
-    int cnt = 0, i=0, ans = 0;
-    for(;i<n&&s[i]=='0';i++,ans++){}
-    for(;i<n;i++){
-        if(s[i]=='0'){
+    // cin >> n;
+    // if (n == 1) {
+    //     cout << 1 << '\n';
+    //     return;
+    // }
+    // dp.clear();
+    // cout << solveRec(n, 2, n) << '\n';
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    for (int i = 0; i < n; i++) // n
+        cin >> a[i];
+    vector<int> b(n);
+    for (int i = 0; i < n; i++) // n
+        cin >> b[i];
+
+    unordered_map<int,int> freq_a, freq_b;
+
+    int cnt = 1;
+    for (int i = 1; i < n; i++){
+        if (a[i] == a[i - 1])
             cnt++;
-        }
         else{
-            ans += max(0LL, cnt - k);
-            cnt = 0;
+            freq_a[a[i - 1]] = max(freq_a[a[i - 1]], cnt);
+            cnt = 1;
         }
     }
-    ans += max(0LL, cnt - k);
-    cout<<ans<<endl;
-}
+    freq_a[a[n - 1]] = max(freq_a[a[n - 1]], cnt);
 
-int solve(vector<int>&a, vector<int>&b, int idx, vector<int>&dp){
-    if(idx < 0) return 0;
-    if(dp[idx] != -1) return dp[idx];
-    int takeA = solve(a, b, idx-1, dp) - a[idx];
-    int takeB = -1*(solve(a, b, idx-1, dp) - b[idx]);
-    return dp[idx] = max(takeA, takeB);
-}
+    cnt = 1;
+    for (int i = 1; i < n; i++){
+        if (b[i] == b[i - 1])
+            cnt++;
+        else{
+            freq_b[b[i - 1]] = max(freq_b[b[i - 1]], cnt);
+            cnt = 1;
+        }
+    }
+    freq_b[b[n - 1]] = max(freq_b[b[n - 1]], cnt);
 
-void solve(){
-    int n;
-    cin>>n;
-    vi a(n), b(n);
-    vector<int>dp(n+1, -1);
-    for(int i=0;i<n;i++) cin>>a[i];
-    for(int i=0;i<n;i++) cin>>b[i];
+    int max_freq = -1;
+    for (int i = 1; i <= 2 * n; i++)
+        max_freq = max(max_freq, freq_a[i] + freq_b[i]);
 
-    cout<<solve(a, b, n-1, dp)<<" ";
+    cout << max_freq << endl;
 }
 
 void printYesNo(bool cond){
     cout<<(cond ? "Yes": "No")<<endl;
 }
+
 signed main(){  
     auto begin = std::chrono::high_resolution_clock::now();
     ios_base::sync_with_stdio(0);

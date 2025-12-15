@@ -41,8 +41,20 @@ int getNCR(int n, int r){
     return temp;
 }
 
+long long C(long long n, long long r) {
+    if (r < 0 || r > n) return 0;
+    return fact[n] * invfact[r] % MOD * invfact[n-r] % MOD;
+}
+
 int main()
 {
     cout<<getNCR(4, 2);
+
+    long long fact[MAX+1], invfact[MAX+1];
+    fact[0] = 1;
+    for (int i=1; i<=MAX; i++) fact[i] = (fact[i-1] * i) % MOD;
+    invfact[MAX] = modpow(fact[MAX], MOD-2);
+    for (int i=MAX; i>0; i--) invfact[i-1] = (invfact[i] * i) % MOD;
+
     return 0;
 }

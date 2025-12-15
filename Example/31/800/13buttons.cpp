@@ -33,7 +33,7 @@ void solve() {
 
 signed main() {
     ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+    cin.tie(NULL)co;
     int t;
     cin >> t;
     while (t--) {
