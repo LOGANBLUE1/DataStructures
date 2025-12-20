@@ -9,10 +9,15 @@ using namespace std;
 #define pf push_front
 #define ppf pop_front
 #define vi vector<int>
+#define vvi vector<vector<int>>
 #define pii pair<int,int>
+#define vpii vector<pair<int,int>>
 #define all(x) begin(x), end(x)
 #define ff first
 #define ss second
+#define dbg(x) cerr << #x << "=" << x << " "
+#define dbgln(x) cerr << #x << "=" << x << "\n"
+#define input(a) for(int i=0;i<a.size();i++)cin>>a[i]
 std::mt19937_64 RNG(chrono::steady_clock::now().time_since_epoch().count());
 
 const long long INF = 1e18;
@@ -20,63 +25,68 @@ const long long M = 1e9+7;
 const long long MOD = 998244353;
 
 void print(int a){
-    cout<<a<<" ";
+    cerr<<a<<" ";
+}
+void debug(vector<int>&a){
+    for (auto i:a) cerr<<i<<" ";
+    cerr<<endl;
 }
 void print(vector<int>&a){
     for (auto i:a) cout<<i<<" ";
     cout<<endl;
 }
 void print(vector<vector<int>>&a){
-    for (auto i:a){
-        for (auto j:i) cout<<j<<" ";
-        cout<<endl;
+    for (int i=0;i<a.size();i++){
+        dbg(i);
+        for (auto j:a[i]) cerr<<j<<" ";
+        cerr<<endl;
     }
 }
 void print(set<int>&s){
-    for (auto i:s) cout<<i<<" ";
-    cout<<endl;
+    for (auto i:s) cerr<<i<<" ";
+    cerr<<endl;
 }
 void print(map<int,int>&m){
-    for (auto i:m) cout<<i.ff<<":"<<i.ss<<" ";
-    cout<<endl;
+    for (auto i:m) cerr<<i.ff<<":"<<i.ss<<" ";
+    cerr<<endl;
 }
 void print(pair<int,int>&p){
-    cout<<"{"<<p.ff<<","<<p.ss<<"}"<<endl;
+    cerr<<"{"<<p.ff<<","<<p.ss<<"} ";
 }
 void print(vector<pii>&a){
-    for (auto i:a) cout<<"{"<<i.ff<<","<<i.ss<<"} ";
-    cout<<endl;
+    for (auto i:a) cerr<<"{"<<i.ff<<","<<i.ss<<"} ";
+    cerr<<endl;
 }
 void print(vector<vector<pii>>&a){
     for (auto i:a){
-        for (auto j:i) cout<<"{"<<j.ff<<","<<j.ss<<"} ";
-        cout<<endl;
+        for (auto j:i) cerr<<"{"<<j.ff<<","<<j.ss<<"} ";
+        cerr<<endl;
     }
 }
 void print(queue<int>q){
     while(!q.empty()){
-        cout<<q.front()<<" ";
+        cerr<<q.front()<<" ";
         q.pop();
     }
-    cout<<endl;
+    cerr<<endl;
 }
 void print(stack<int>s){
     while(!s.empty()){
-        cout<<s.top()<<" ";
+        cerr<<s.top()<<" ";
         s.pop();
     }
-    cout<<endl;
+    cerr<<endl;
 }
 void print(deque<int>d){
-    for (auto i:d) cout<<i<<" ";
-    cout<<endl;
+    for (auto i:d) cerr<<i<<" ";
+    cerr<<endl;
 }
 void print(priority_queue<int>pq){
     while(!pq.empty()){
-        cout<<pq.top()<<" ";
+        cerr<<pq.top()<<" ";
         pq.pop();
     }
-    cout<<endl;
+    cerr<<endl;
 }
 
 long long computeModInverse(long long base) {
@@ -119,8 +129,8 @@ bool isPrime(int n) {
     return true;
 }
 
-long long modPow(long long base, long long exp, long long mod) {
-    long long result = 1;
+int modPow(int base, int exp, int mod) {
+    int result = 1;
     while (exp > 0) {
         if (exp % 2 == 1) {
             result = (result * base) % mod;
@@ -169,60 +179,61 @@ bool isCorrect(string tobe, string given){
 //     return dp[prodLeft][minFactor] = ways;
 // }
 
-void solve(){
-    // cin >> n;
-    // if (n == 1) {
-    //     cout << 1 << '\n';
-    //     return;
-    // }
-    // dp.clear();
-    // cout << solveRec(n, 2, n) << '\n';
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    for (int i = 0; i < n; i++) // n
-        cin >> a[i];
-    vector<int> b(n);
-    for (int i = 0; i < n; i++) // n
-        cin >> b[i];
-
-    unordered_map<int,int> freq_a, freq_b;
-
-    int cnt = 1;
-    for (int i = 1; i < n; i++){
-        if (a[i] == a[i - 1])
-            cnt++;
-        else{
-            freq_a[a[i - 1]] = max(freq_a[a[i - 1]], cnt);
-            cnt = 1;
-        }
-    }
-    freq_a[a[n - 1]] = max(freq_a[a[n - 1]], cnt);
-
-    cnt = 1;
-    for (int i = 1; i < n; i++){
-        if (b[i] == b[i - 1])
-            cnt++;
-        else{
-            freq_b[b[i - 1]] = max(freq_b[b[i - 1]], cnt);
-            cnt = 1;
-        }
-    }
-    freq_b[b[n - 1]] = max(freq_b[b[n - 1]], cnt);
-
-    int max_freq = -1;
-    for (int i = 1; i <= 2 * n; i++)
-        max_freq = max(max_freq, freq_a[i] + freq_b[i]);
-
-    cout << max_freq << endl;
+inline int gcd(int a, int b){
+    return b == 0 ? a : gcd(b, a % b);
+}
+inline int max(int a, int32_t b){
+    return max(a, 1LL*b);
+}
+inline int max(int32_t a, int b){
+    return max(1LL*a, b);
 }
 
 void printYesNo(bool cond){
-    cout<<(cond ? "Yes": "No")<<endl;
+    cout<<(cond ? "YES": "NO")<<endl;
+}
+
+int pre(vi &a, vi &b, int mid){
+    int y = mid;
+    for(int i=0;i<a.size();i++){
+        y = max(a[i], b[i]+y);
+    }
+    return y;
+}
+
+
+int sum(int a){
+    return a*(a+1)/2;
+}
+int nc2(int n){
+    return n*(n-1)/2;
+}
+
+int pred(vi &a, int mid){
+    int ans = 0;
+    for(auto i: a){
+
+    }
+    return ans;
+}
+
+int dist(pii &a, pii &b){
+    return abs(a.ff - b.ff) + abs(a.ss - b.ss);
+}
+pii makep(int a, int b){
+    return make_pair(a, b);
+}
+
+void solve(){
+    int n, m;
+    cin>>n >> m;
+    vi a(n);
+    input(a);
+    
 }
 
 signed main(){  
-    auto begin = std::chrono::high_resolution_clock::now();
+    auto begin = chrono::high_resolution_clock::now();
     ios_base::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
@@ -231,9 +242,9 @@ signed main(){
     while(t--){
         solve();
     }
-    auto end = std::chrono::high_resolution_clock::now();
-    auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
-    cerr << "Time measured: " << elapsed.count() * 1e-9 << " seconds.\n"; 
+    auto end = chrono::high_resolution_clock::now();
+    auto elapsed = chrono::duration_cast<chrono::nanoseconds>(end - begin);
+    cerr << "Time measured: " << elapsed.count() * 1e-6 << " ms.\n"; 
     return 0;
 }
 
