@@ -30,6 +30,13 @@ bool isVowel(char c) {
     c = tolower(c);
     return (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u');
 }
+bool isConsonant(char c){
+    c = tolower(c);
+    return ((c >= 'a' && c <= 'z') && !isVowel(c));
+}
+bool isDigit(char c) {
+    return (c >= '0' && c <= '9');
+}
 
 vector<int> parseAndFillVector(const string& numberString, char separator) {
     vector<int> numbers;

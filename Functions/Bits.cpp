@@ -11,7 +11,7 @@ int a(int num){
 }
 
 // k -> size of vector
-vector<bool> bits(int n,int k){
+vector<bool> bits(int n,int k){// 6 -> 000110
     vector<bool>ans(k,0);
     for(int i=0;i<k;i++){
         if((n>>i)&1)
@@ -20,7 +20,7 @@ vector<bool> bits(int n,int k){
     return ans;
 }
 
-long long val(vector<bool>&a, int k){
+long long val(vector<bool>&a, int k){// 000110 -> 6
     long long ans = 0;
     for(int i=0;i<k;i++){
         if(a[i])

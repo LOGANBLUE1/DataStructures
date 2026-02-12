@@ -13,24 +13,27 @@ using namespace std;
 #define pii pair<int,int>
 #define vpii vector<pair<int,int>>
 #define all(x) begin(x), end(x)
+#define rall(x) rbegin(x), rend(x)
 #define ff first
 #define ss second
 #define dbg(x) cerr << #x << "=" << x << " "
 #define dbgln(x) cerr << #x << "=" << x << "\n"
-#define input(a) for(int i=0;i<a.size();i++)cin>>a[i]
+#define input(a) for(int i=0;i<a.size();i++) cin>>a[i]
 std::mt19937_64 RNG(chrono::steady_clock::now().time_since_epoch().count());
-
+// __builtin_popcount(num)
 const long long INF = 1e18;
 const long long M = 1e9+7;
 const long long MOD = 998244353;
-
-void print(int a){
+template<class T>
+void print(T a){
     cerr<<a<<" ";
 }
-void debug(vector<int>&a){
-    for (auto i:a) cerr<<i<<" ";
-    cerr<<endl;
+template<class T>
+void debug(const vector<T>& a){
+    for(const auto& i : a) cerr << i << " ";
+    cerr << '\n';
 }
+
 void print(vector<int>&a){
     for (auto i:a) cout<<i<<" ";
     cout<<endl;
@@ -88,31 +91,18 @@ void print(priority_queue<int>pq){
     }
     cerr<<endl;
 }
+int getNoOfDigit(int n){
+    return log10(n)+1;
+}
 
-long long computeModInverse(long long base) {
-    long long result = 1, exp = M - 2;
+int computeModInverse(int base) {
+    int result = 1, exp = M - 2;
     while (exp) {
         if (exp % 2) result = (result * base) % M;
         base = (base * base) % M;
         exp /= 2;
     }
     return result;
-}
-
-vector<int> getPref(vector<int>&a){
-    vector<int> pref(a.size()+1);
-    for (int i = 1; i <= a.size(); i++){
-        pref[i] = (pref[i-1] + a[i-1]);
-    }
-    return pref;// 0 a[0] a[0]+a[1]
-}
-
-vector<int> getSuff(vector<int>&a){
-    vector<int> suff(a.size()+1);
-    for (int i = a.size()-1; i >= 0; i--){
-        suff[i] = (suff[i+1] + a[i-1]);
-    }
-    return suff;
 }
 
 bool isPrime(int n) {
@@ -156,29 +146,6 @@ bool isCorrect(string tobe, string given){
     return true;
 }
 
-// unordered_map<int, unordered_map<int, int>> dp;
-// int n;
-// int solveRec(int prodLeft, int minFactor, int sumLeft) {
-//     if (sumLeft < 0) return 0;
-//     if (prodLeft < minFactor) return 0;
-
-//     if (dp[prodLeft].count(minFactor))
-//         return dp[prodLeft][minFactor];
-
-//     int ways = 0;
-//     if (prodLeft <= sumLeft) ways++;
-
-//     int lim = sqrtl(prodLeft);
-//     for (int f = minFactor; f <= lim; ++f) {
-//         if (prodLeft % f == 0) {
-//             if (f > sumLeft) break;
-//             ways += solveRec(prodLeft / f, f, sumLeft - f);
-//         }
-//     }
-
-//     return dp[prodLeft][minFactor] = ways;
-// }
-
 inline int gcd(int a, int b){
     return b == 0 ? a : gcd(b, a % b);
 }
@@ -209,29 +176,108 @@ int nc2(int n){
     return n*(n-1)/2;
 }
 
-int pred(vi &a, int mid){
-    int ans = 0;
-    for(auto i: a){
-
-    }
-    return ans;
-}
-
 int dist(pii &a, pii &b){
     return abs(a.ff - b.ff) + abs(a.ss - b.ss);
 }
-pii makep(int a, int b){
-    return make_pair(a, b);
+
+int getReverseInt(int a){
+    string s = to_string(a);
+    reverse(all(s));
+    return stoi(s);
 }
 
-void solve(){
-    int n, m;
-    cin>>n >> m;
-    vi a(n);
-    input(a);
+bitset<32> getBitset(int n){//to print 6 -> 01100000....
+    bitset<32> a(n);
+    return a;
+}
+
+int getMinDiff(vector<int>&a){
+    int res = 1e9;
+    for(int i=1;i<a.size();i++){
+        res = min(res, a[i]-a[i-1]);
+    }
+    return res;
+}
+
+void solve2(){
+    int A,B;
+    cin>>A>>B;
+    vi a(A), b(B);
+    for(int i=0;i<A;i++) cin>>a[i];
+    for(int i=0;i<B;i++) cin>>b[i];
+    sort(all(a));
+    sort(all(b));
+    vi maxPrefA(A,0), maxPrefB(B,0), maxSuffA(A,0), maxSuffB(B,0);
+    //  1->A-1           1->B-1             A-2->0            B-2->0
+    for(int i=1;i<A;i++) maxPrefA[i] = max(maxPrefA[i-1], (a[i]-a[i-1]));
+    for(int i=1;i<B;i++) maxPrefB[i] = max(maxPrefB[i-1], (b[i]-b[i-1]));
+    for(int i=A-2;i>=0;i--) maxSuffA[i] = max(maxSuffA[i+1], (a[i+1]-a[i]));
+    for(int i=B-2;i>=0;i--) maxSuffB[i] = max(maxSuffB[i+1], (b[i+1]-b[i]));
+
     
 }
 
+int solve(string& s, int i, int j, vector<vector<int>>& dp){
+    if(i>j) 
+        return 0;
+    if(dp[i][j]!=-1) 
+        return dp[i][j];
+    if(s[i]==s[j])
+        return dp[i][j] = solve(s, i+1, j-1, dp);
+    return dp[i][j] = 1 + min(solve(s, i+1, j, dp), solve(s, i, j-1, dp));
+}
+vector<int> fact;
+void initFactorial()
+{
+    int n = 2e5+5;
+    fact.resize(n);
+    fact[0] = 1;
+    for (int i = 1; i < n; i++)
+    {
+        fact[i] = (fact[i - 1] * i) % MOD;
+    }
+}
+
+void solve() {
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+    sort(all(a));
+    int maxi = 0, cnt = 0, l = 1;
+    for (int i = 0; i < n - 1; i++){
+        if (a[i + 1] == a[i] + 1) {
+            l++;
+        } 
+        else{
+            if(l > maxi){
+                maxi = l;
+                cnt = 1;
+            }
+            else if(l == maxi){
+                cnt++;
+            }
+            l = 1;
+        }
+    }
+    if(l > maxi){
+        maxi = l;
+        cnt = 1;
+    }
+    else if(l == maxi){
+        cnt++;
+    }
+    int ans = (cnt * power(2, maxi - 1, MOD)) % MOD;
+    ans = (ans * fact[n - maxi]) % MOD;
+    cout << ans << endl;
+}
+
+// >= cm         - 2.849
+// >= expert     - 8.309
+// >= specialist - 16.310
+// >= pupil      - 29.212
 signed main(){  
     auto begin = chrono::high_resolution_clock::now();
     ios_base::sync_with_stdio(0);
@@ -239,6 +285,7 @@ signed main(){
     cout.tie(0);
     int t;
     cin>>t;
+    initFactorial();
     while(t--){
         solve();
     }

@@ -26,6 +26,26 @@ vector<int> topologicalSort(vector<vector<pair<int,int>>> &adj) {
     return ts;
 }
 
+vector<int> distanceBFS(int i, vector<vector<int>>& adj) {
+    int n = adj.size();
+    vector<int> dist(n, -1);
+    queue<int> q;
+    dist[i] = 0;
+    q.push(i);
+
+    while (!q.empty()) {
+        int u = q.front(); q.pop();
+
+        for (int v : adj[u]) {
+            if (dist[v] == -1) {
+                dist[v] = dist[u] + 1;
+                q.push(v);
+            }
+        }
+    }
+    return dist;
+}
+
 int main() {
     int n;
 

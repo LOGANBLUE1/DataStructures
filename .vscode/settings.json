@@ -62,5 +62,7 @@
         "forward_list": "cpp",
         "chrono": "cpp"
     },
-    "C_Cpp.errorSquiggles": "disabled"
+    "C_Cpp.errorSquiggles": "disabled",
+    "editor.fontFamily": "'Source Code Pro', monospace",
+    "workbench.colorTheme": "One Dark Pro Night Flat"
 }
