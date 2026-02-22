@@ -21,6 +21,24 @@ vector<int> getFactorials(int n){
     return fact;
 }
 
+// returns for n = 5, 
+// 1 0 0 0 0 0 
+// 1 1 0 0 0 0 
+// 1 2 1 0 0 0 
+// 1 3 3 1 0 0 
+// 1 4 6 4 1 0 
+// 1 5 10 10 5 1 
+vector<vector<long long>>getNcR(int n){
+    vector<vector<long long>>ncr(n+1, vector<long long>(n+1));
+    for (int i = 0; i <= n; i++) {
+        ncr[i][0] = ncr[i][i] = 1;
+        for (int j = 1; j < i; j++)
+            ncr[i][j] = ncr[i-1][j-1] + ncr[i-1][j];
+    }
+    return ncr;
+}
+
+// nc0 nc1 nc2........... ncn
 vector<int> getNCR(int n){
     vector<int> fact = getFactorials(n);
     vector<int> ans(n+1);
@@ -33,6 +51,7 @@ vector<int> getNCR(int n){
     return ans;
 }
 
+// returns ncr e.g. 5c2 = 10
 int getNCR(int n, int r){
     if(r>n)return 0;
     vector<int> fact = getFactorials(n);

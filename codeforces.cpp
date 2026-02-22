@@ -214,18 +214,8 @@ void solve2(){
     for(int i=A-2;i>=0;i--) maxSuffA[i] = max(maxSuffA[i+1], (a[i+1]-a[i]));
     for(int i=B-2;i>=0;i--) maxSuffB[i] = max(maxSuffB[i+1], (b[i+1]-b[i]));
 
-    
 }
 
-int solve(string& s, int i, int j, vector<vector<int>>& dp){
-    if(i>j) 
-        return 0;
-    if(dp[i][j]!=-1) 
-        return dp[i][j];
-    if(s[i]==s[j])
-        return dp[i][j] = solve(s, i+1, j-1, dp);
-    return dp[i][j] = 1 + min(solve(s, i+1, j, dp), solve(s, i, j-1, dp));
-}
 vector<int> fact;
 void initFactorial()
 {
@@ -239,39 +229,11 @@ void initFactorial()
 }
 
 void solve() {
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    for (int i = 0; i < n; i++) {
-        cin >> a[i];
-    }
-    sort(all(a));
-    int maxi = 0, cnt = 0, l = 1;
-    for (int i = 0; i < n - 1; i++){
-        if (a[i + 1] == a[i] + 1) {
-            l++;
-        } 
-        else{
-            if(l > maxi){
-                maxi = l;
-                cnt = 1;
-            }
-            else if(l == maxi){
-                cnt++;
-            }
-            l = 1;
-        }
-    }
-    if(l > maxi){
-        maxi = l;
-        cnt = 1;
-    }
-    else if(l == maxi){
-        cnt++;
-    }
-    int ans = (cnt * power(2, maxi - 1, MOD)) % MOD;
-    ans = (ans * fact[n - maxi]) % MOD;
-    cout << ans << endl;
+    int a, b, c;
+    cin >> a >> b >> c;
+    if(2*b == a+c) printYesNo(true);
+    else if((((2*b - c > 0) && (2*b - c)%a == 0)) || ((2*b - a > 0) && (2*b - a)%c == 0) || (a+c)%(2*b) == 0) printYesNo(true);
+    else printYesNo(false);
 }
 
 // >= cm         - 2.849
@@ -285,7 +247,7 @@ signed main(){
     cout.tie(0);
     int t;
     cin>>t;
-    initFactorial();
+    // initFactorial();
     while(t--){
         solve();
     }
